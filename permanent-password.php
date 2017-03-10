@@ -1,15 +1,18 @@
 <?php
 /**
- * Plugin Name: Permanent Password
- * Description: A light-weight plugin to add a permanent password to any user on your website.
- * Plugin URI: https://github.com/InspiryThemes/permanent-password
- * Author: Inspiry Themes
- * Author URI: http://inspirythemes.com
- * Contributors: mrasharirfan, inspirythemes
- * Version: 1.0.0
- * License: GPL2
- * Text Domain: pp
- * Domain Path: /languages/
+ * Plugin Name: 	Permanent Password
+ * Description: 	A light-weight plugin to add a permanent password to any user on your website.
+ * Plugin URI: 		https://github.com/InspiryThemes/permanent-password
+ * Author: 			Inspiry Themes
+ * Author URI: 		http://inspirythemes.com
+ * Contributors: 	mrasharirfan, inspirythemes
+ * Version: 		1.0.0
+ * License: 		GPL2
+ * Text Domain: 	pp
+ * Domain Path: 	/languages/
+ *
+ * @since 	1.0.0
+ * @package PP
  */
 
 // Exit if accessed directly.
@@ -160,7 +163,7 @@ if ( ! class_exists( 'Permanent_Password' ) ) :
 									name="pp_check"
 									id="pp_check"
 									class="regular-text"
-									<?php echo ( 'on' === $checked ) ? 'checked' : false; ?> />
+									<?php echo ( 'on' === $checked ) ? esc_attr( 'checked' ) : false; ?> />
 							<span class="description"><?php esc_html_e( 'Check to make the password of this user permanent.', 'pp' ); ?></span>
 						</td>
 
@@ -179,7 +182,7 @@ if ( ! class_exists( 'Permanent_Password' ) ) :
 									name="pp_password"
 									id="pp_password"
 									class="regular-text"
-									value="<?php echo ( ! empty( $pp_password ) ) ? $pp_password : ''; ?>" /><br>
+									value="<?php echo ( ! empty( $pp_password ) ) ? esc_attr( $pp_password ) : ''; ?>" /><br>
 							<span class="description"><?php esc_html_e( 'Enter a permanent password for this user.', 'pp' ); ?></span>
 						</td>
 
@@ -206,18 +209,21 @@ if ( ! class_exists( 'Permanent_Password' ) ) :
 			$pp_password = get_user_meta( $user_id, 'pp_password', true );
 
 			if ( isset( $_POST[ 'pp_check' ] ) ) {
-				update_user_meta( $user_id, 'pp_check', $_POST[ 'pp_check' ] );
+				$pp_post_check	= sanitize_text_field( $_POST[ 'pp_check' ] );
+				update_user_meta( $user_id, 'pp_check', $pp_post_check );
 			} else {
 				update_user_meta( $user_id, 'pp_check', false );
 			}
 
 			if ( isset( $_POST[ 'pp_password' ] ) ) {
-				update_user_meta( $user_id, 'pp_password', $_POST[ 'pp_password' ] );
+				$pp_post_password	= sanitize_text_field( $_POST[ 'pp_password' ] );
+				update_user_meta( $user_id, 'pp_password', $pp_post_password );
 			} else {
 				update_user_meta( $user_id, 'pp_password', false );
 			}
 
-			if ( isset( $_POST[ 'pp_password' ] ) && $pp_password !== $_POST[ 'pp_password' ] ) {
+			$pp_post_password_check = ( isset( $_POST[ 'pp_password' ] ) ) ? sanitize_text_field( $_POST[ 'pp_password' ] ) : false;
+			if ( isset( $_POST[ 'pp_password' ] ) && $pp_password !== $pp_post_password_check ) {
 				update_user_meta( $user_id, 'pp_password_updated', true );
 			} else {
 				update_user_meta( $user_id, 'pp_password_updated', false );
