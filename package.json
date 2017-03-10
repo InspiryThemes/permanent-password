@@ -1,0 +1,32 @@
+{
+  "name": "permanent-password",
+  "version": "1.0.0",
+  "description": "A light-weight plugin to add a permanent password to any user on your website.",
+  "main": "gulpfile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/InspiryThemes/permanent-password.git"
+  },
+  "keywords": [
+    "wordpress",
+    "users",
+    "password",
+    "permanent",
+    "permanent-password"
+  ],
+  "author": "inspiry-themes",
+  "license": "GPL-2.0",
+  "bugs": {
+    "url": "https://github.com/InspiryThemes/permanent-password/issues"
+  },
+  "homepage": "https://github.com/InspiryThemes/permanent-password#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-notify": "^3.0.0",
+    "gulp-wp-pot": "^2.0.4",
+    "gulp-zip": "^4.0.0"
+  }
+}
