@@ -45,7 +45,7 @@ gulp.task('zip', function () {
         '!./*.sublime-project',
         '!./*.sublime-workspace'
     ])
-    .pipe ( zip ( 'inspiry-memberships.zip' ) )
+    .pipe ( zip ( 'permanent-password.zip' ) )
     .pipe ( gulp.dest ( '../' ) )
     .pipe ( notify ( {
         message : 'Permanent Password plugin zip is ready.',

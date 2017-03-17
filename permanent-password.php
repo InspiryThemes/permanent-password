@@ -20,16 +20,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-/**
- * Permanent_Password.
- *
- * Plugin Core Class.
- *
- * @since 1.0.0
- */
-
 if ( ! class_exists( 'Permanent_Password' ) ) :
 
+	/**
+	 * Permanent_Password.
+	 *
+	 * Plugin Core Class.
+	 *
+	 * @since 1.0.0
+	 */
 	class Permanent_Password {
 
 		/**
@@ -82,32 +81,32 @@ if ( ! class_exists( 'Permanent_Password' ) ) :
 		 */
 		public function define_constants() {
 
-			// Plugin version
+			// Plugin version.
 			if ( ! defined( 'PP_VERSION' ) ) {
 				define( 'PP_VERSION', $this->version );
 			}
 
-			// Plugin Name
+			// Plugin Name.
 			if ( ! defined( 'PP_BASE_NAME' ) ) {
 				define( 'PP_BASE_NAME', plugin_basename( __FILE__ ) );
 			}
 
-			// Plugin Directory URL
+			// Plugin Directory URL.
 			if ( ! defined( 'PP_BASE_URL' ) ) {
 				define( 'PP_BASE_URL', plugin_dir_url( __FILE__ ) );
 			}
 
-			// Plugin Directory Path
+			// Plugin Directory Path.
 			if ( ! defined( 'PP_BASE_DIR' ) ) {
 				define( 'PP_BASE_DIR', plugin_dir_path( __FILE__ ) );
 			}
 
-			// Plugin Docs URL
+			// Plugin Docs URL.
 			if ( ! defined( 'PP_DOCS_URL' ) ) {
 				define( 'PP_DOCS_URL', '#' );
 			}
 
-			// Plugin Issue Reporting URL
+			// Plugin Issue Reporting URL.
 			if ( ! defined( 'PP_ISSUE_URL' ) ) {
 				define( 'PP_ISSUE_URL', 'https://github.com/InspiryThemes/permanent-password/issues' );
 			}
@@ -140,12 +139,13 @@ if ( ! class_exists( 'Permanent_Password' ) ) :
 		/**
 		 * Method: Show setting field in user profile page.
 		 *
+		 * @param object $user - Current user.
 		 * @since 1.0.0
 		 */
 		public function pp_user_setting( $user ) {
 
 			$current_user = wp_get_current_user();
-			if ( in_array( 'administrator', (array) $current_user->roles ) ) : ?>
+			if ( in_array( 'administrator', (array) $current_user->roles ) && is_admin() ) : ?>
 
 				<h3><?php esc_html_e( 'Make password permanent', 'pp' ); ?></h3>
 
@@ -198,17 +198,19 @@ if ( ! class_exists( 'Permanent_Password' ) ) :
 		/**
 		 * Method: Save setting field in user profile page.
 		 *
+		 * @param int $user_id - Current user id.
 		 * @since 1.0.0
 		 */
 		public function pp_save_user_setting( $user_id ) {
 
 			$current_user = wp_get_current_user();
-			if ( ! in_array( 'administrator', (array) $current_user->roles ) )
+			if ( ! in_array( 'administrator', (array) $current_user->roles ) ) {
 				return false;
+			}
 
 			$pp_password = get_user_meta( $user_id, 'pp_password', true );
 
-			if ( isset( $_POST[ 'pp_check' ] ) ) {
+			if ( isset( $_POST['pp_check'] ) ) {
 				$pp_post_check	= sanitize_text_field( $_POST[ 'pp_check' ] );
 				update_user_meta( $user_id, 'pp_check', $pp_post_check );
 			} else {
@@ -352,8 +354,8 @@ endif;
  *
  * @since 1.0.0
  */
-function PP() {
+function pp() {
 	return Permanent_Password::instance();
 }
 
-PP();
+pp();
